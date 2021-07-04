@@ -1,0 +1,10 @@
+.popup__input-prof {
+  max-width: 238px;
+  padding-top: 30px;
+  border: hidden;
+  color: #000000;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  border-bottom: 1px;
+}

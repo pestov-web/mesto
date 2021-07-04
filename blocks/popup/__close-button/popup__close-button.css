@@ -1,0 +1,14 @@
+.popup__close-button {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-color: #000000;
+  background-image: url(../../../images/popup/close_icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  align-self: flex-end;
+  margin-bottom: 16px;
+}
