@@ -6,13 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css" />
-  <title>Document</title>
+  <title>Mesto</title>
 </head>
 
 <body class="page">
   <header class="header">
     <div class="header__logo"></div>
-    <div class="header__line"></div>
   </header>
   <main>
     <!--  Section Profile-->
@@ -27,7 +26,50 @@
     </section>
     <!--  Section Places -->
     <section class="places">
-
+      <ul class="places__cards">
+        <li class="places__card">
+          <img src="./images/places/vlad.jpg" alt="Фото Владивостока" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Владивосток</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+        <li class="places__card">
+          <img src="./images/places/voronej.jpg" alt="Вото Воронежа" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Воронеж</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+        <li class="places__card">
+          <img src="./images/places/sanya.jpg" alt="Фото города Санья" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Санья</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+        <li class="places__card">
+          <img src="./images/places/saha.jpg" alt="Фото Южно-Сахалинска" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Южно-Сахалинск</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+        <li class="places__card">
+          <img src="./images/places/dalas.jpg" alt="Фото Дальнегорска" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Дальнегорск</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+        <li class="places__card">
+          <img src="./images/places/rudnaya.jpg" alt="Фото поселка Рудная пристань" class="places__image">
+          <div class="places__discription">
+            <h2 class="places__title">Рудная пристань</h2>
+            <button class="places__like-button"></button>
+          </div>
+        </li>
+      </ul>
     </section>
   </main>
   <footer class="footer">
