@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css" />
-  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Место</title>
 </head>
 
 <body class="page">
@@ -77,15 +77,18 @@
   </footer>
   <div class="popup">
     <div class="popup__container">
-      <button class="button popup__close-button"></button>
-      <form action="" class="popup__form">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" class="popup__input-name" placeholder="Имя" name="name">
-        <input type="text" class="popup__input-prof" placeholder="Проффессия" name="prof">
-        <input type="submit" class="button popup__submit">
-      </form>
+      <div class="popup__form-cover">
+        <button class="button popup__close-button"></button>
+        <form action="" class="popup__form">
+          <h3 class="popup__title">Редактировать профиль</h3>
+          <input type="text" placeholder="Жак-Ив Кусто" class="popup__input-name">
+          <input type="text" placeholder="Исследователь океана" class="popup__input-prof">
+          <button class="button popup__submit-button">Сохранить</button>
+        </form>
+      </div>
     </div>
   </div>
+  <script src="script.js"></script>
 </body>
 
 </html>
