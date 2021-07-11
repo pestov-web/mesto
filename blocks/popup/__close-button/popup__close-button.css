@@ -9,13 +9,21 @@
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
-  align-self: flex-end;
   margin-bottom: 16px;
+  position: absolute;
+  top: -33px;
+  right: 0;
+}
+
+.popup__close-button:hover {
+  opacity: 0.6;
 }
 
 @media screen and (min-width: 768px) {
   .popup__close-button {
     width: 32px;
     height: 32px;
+    top: -48px;
+    right: -48px;
   }
 }

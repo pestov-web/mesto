@@ -10,3 +10,7 @@
   background-size: cover;
   border: none;
 }
+
+.places__like-button:hover {
+  opacity: 0.5;
+}
