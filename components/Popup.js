@@ -1,14 +1,14 @@
-let popupContainer = document.querySelector('.popup');
-let editButton = document.querySelector('.profile__info-edit-button');
-let closeButton = document.querySelector('.popup__close-button');
+const popupContainer = document.querySelector('.popup');
+const editButton = document.querySelector('.profile__info-edit-button');
+const closeButton = document.querySelector('.popup__close-button');
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__form');
+const formElement = document.querySelector('.popup__form');
 // Находим поля формы в DOM
-let nameInput = document.querySelector('.popup__input_type_name');
-let jobInput = document.querySelector('.popup__input_type_prof');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_prof');
 // Находим имя и проффессию 
-let profileName = document.querySelector(".profile__info-title");
-let profileJob = document.querySelector(".profile__info-subtitle");
+const profileName = document.querySelector(".profile__info-title");
+const profileJob = document.querySelector(".profile__info-subtitle");
 
 // открываем попап, получаем текст
 function openPopup() {
