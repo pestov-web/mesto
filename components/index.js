@@ -98,13 +98,13 @@ initialCards.forEach(function(element) {
 
     closeButton.addEventListener('click', deletePopup);
 
-    gallery.append(galleryElement)
+    gallery.append(galleryElement);
 
     gallery.classList.add('gallery_opened');
 
   });
 
-  placesList.append(placesElement)
+  placesList.append(placesElement);
 });
 
 
@@ -196,11 +196,9 @@ addButton.addEventListener('click', function() {
       itemToDelete.remove();
     });
 
-    placesList.prepend(placesElement)
+    placesList.prepend(placesElement);
     deletePopup();
   });
-
-
 
   popup.append(popupElement);
 
