@@ -1,14 +1,19 @@
 const placesList = document.querySelector('.places__cards');
 const popup = document.querySelector('.popup');
+const gallery = document.querySelector('.gallery');
 // находим темплэйты
 const placesTemplate = document.querySelector('.places-template').content;
 const popupTemplate = document.querySelector('.popup-template').content;
+const galleryTemplate = document.querySelector('.gallery-template').content;
 // находим кнопки
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
 
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
+
+
+
 
 // массив обьектов попапа
 const initialPopup = [{
@@ -56,10 +61,11 @@ const initialCards = [{
 initialCards.forEach(function(element) {
   const placesElement = placesTemplate.cloneNode(true);
   const placesDeleteButton = placesElement.querySelector('.places__delete-button');
+  const images = placesElement.querySelector('.places__image');
 
   placesElement.querySelector('.places__title').textContent = element.name;
   placesElement.querySelector('.places__image').src = element.link;
-  placesElement.querySelector('.places__image').alt = ('Фотография ' + element.name);
+  placesElement.querySelector('.places__image').alt = (element.name);
 
   // добавляем возможность лайков
   placesElement.querySelector('.places__like-button').addEventListener('click', function(evt) {
@@ -71,8 +77,37 @@ initialCards.forEach(function(element) {
     itemToDelete.remove();
   });
 
+  images.addEventListener('click', function(evt) {
+    const galleryElement = galleryTemplate.cloneNode(true);
+    const closeButton = galleryElement.querySelector('.gallery__close-button');
+    const galleryToDelete = closeButton.closest('.gallery__container');
+
+    galleryElement.querySelector('.gallery__image').src = evt.target.src;
+    galleryElement.querySelector('.gallery__image').alt = evt.target.alt;
+    galleryElement.querySelector('.gallery__title').textContent = evt.target.alt;
+
+    // удаляем элемент из DOM
+    function deleteFromDom() {
+      galleryToDelete.remove();
+    }
+    // удаляем попап по нажатию на крестик
+    function deletePopup() {
+      deletePopupClass();
+      setTimeout(deleteFromDom, 500);
+    }
+
+    closeButton.addEventListener('click', deletePopup);
+
+    gallery.append(galleryElement)
+
+    gallery.classList.add('gallery_opened');
+
+  });
+
   placesList.append(placesElement)
 });
+
+
 
 // создаем попап редактирования профиля
 editButton.addEventListener('click', function() {
@@ -144,12 +179,12 @@ addButton.addEventListener('click', function() {
 
   // соxраняем значения по кнопке сабмит
   popupForm.addEventListener('submit', function() {
-
     const placesElement = placesTemplate.cloneNode(true);
     const placesDeleteButton = placesElement.querySelector('.places__delete-button');
+
     placesElement.querySelector('.places__title').textContent = firstInput.value;
     placesElement.querySelector('.places__image').src = secondInput.value;
-    placesElement.querySelector('.places__image').alt = ('Фотография ' + firstInput.value);
+    placesElement.querySelector('.places__image').alt = firstInput.value;
 
     // добавляем возможность лайков
     placesElement.querySelector('.places__like-button').addEventListener('click', function(evt) {
@@ -165,6 +200,8 @@ addButton.addEventListener('click', function() {
     deletePopup();
   });
 
+
+
   popup.append(popupElement);
 
   popup.classList.add('popup_opened');
@@ -176,4 +213,5 @@ function deletePopupClass() {
   popup.classList.remove('popup_opened');
   popup.classList.remove('popup-edit');
   popup.classList.remove('popup-add');
+  gallery.classList.remove('gallery_opened');
 }

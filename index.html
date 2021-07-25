@@ -35,12 +35,23 @@
     <footer class="footer">
       <p class="footer__copy">&copy; 2020 Mesto Russia</p>
     </footer>
+    <!--  gallery popup -->
+    <div class="gallery">
 
+    </div>
     <!-- popup -->
     <div class="popup">
 
     </div>
-    <!-- popup template-->
+    <!--  gallery popup template-->
+    <template class="gallery-template">
+      <div class="gallery__container">
+        <button class="button gallery__close-button" type="button" aria-label="закрыть"></button>
+        <img src="./images/places/vlad.jpg" alt="Фото Владивостока" class="gallery__image">
+        <h2 class="gallery__title">Владивосток</h2>
+      </div>
+    </template>
+    <!-- add/edit popup template-->
     <template class="popup-template">
       <div class="popup__container">
         <button class="button popup__close-button" type="button" aria-label="закрыть"></button>
