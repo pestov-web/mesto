@@ -12,9 +12,6 @@ const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
-
-
-
 // массив обьектов попапа
 const initialPopup = [{
     title: 'Редактировать профиль',
@@ -106,8 +103,6 @@ initialCards.forEach(function(element) {
 
   placesList.append(placesElement);
 });
-
-
 
 // создаем попап редактирования профиля
 editButton.addEventListener('click', function() {
