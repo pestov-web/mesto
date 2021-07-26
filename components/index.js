@@ -1,32 +1,8 @@
 const placesList = document.querySelector('.places__cards');
-const popup = document.querySelector('.popup');
-const gallery = document.querySelector('.gallery');
-// находим темплэйты
 const placesTemplate = document.querySelector('.places-template').content;
-const popupTemplate = document.querySelector('.popup-template').content;
-const galleryTemplate = document.querySelector('.gallery-template').content;
 // находим кнопки
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
-
-const profileName = document.querySelector(".profile__info-title");
-const profileJob = document.querySelector(".profile__info-subtitle");
-
-// массив обьектов попапа
-const initialPopup = [{
-    title: 'Редактировать профиль',
-    firstInput: profileName.textContent,
-    secondInput: profileJob.textContent,
-    button: 'Сохранить'
-  },
-  {
-    title: 'Новое место',
-    firstInput: 'Название',
-    secondInput: 'Ссылка на картинку',
-    button: 'Создать'
-  }
-];
-
 // массив обьектов карточек мест
 const initialCards = [{
     name: 'Владивосток',
@@ -54,157 +30,101 @@ const initialCards = [{
   }
 ];
 
-// добавляем карточки с массива
-initialCards.forEach(function(element) {
-  const placesElement = placesTemplate.cloneNode(true);
-  const placesDeleteButton = placesElement.querySelector('.places__delete-button');
-  const images = placesElement.querySelector('.places__image');
-
-  placesElement.querySelector('.places__title').textContent = element.name;
-  placesElement.querySelector('.places__image').src = element.link;
-  placesElement.querySelector('.places__image').alt = (element.name);
+// рендлерим карточки
+const renderCard = (place, data) => {
 
   // добавляем возможность лайков
-  placesElement.querySelector('.places__like-button').addEventListener('click', function(evt) {
+  data.querySelector('.places__like-button').addEventListener('click', (evt) => {
     evt.target.classList.toggle('places__like-button_active');
   });
+
   //добовляем возможность удалять карточки
-  placesDeleteButton.addEventListener('click', function() {
-    const itemToDelete = placesDeleteButton.closest('.places__card');
+  data.querySelector('.places__delete-button').addEventListener('click', (evt) => {
+    const itemToDelete = evt.target.closest('.places__card');
     itemToDelete.remove();
   });
 
-  images.addEventListener('click', function(evt) {
-    const galleryElement = galleryTemplate.cloneNode(true);
-    const closeButton = galleryElement.querySelector('.gallery__close-button');
-    const galleryToDelete = closeButton.closest('.gallery__container');
+  //добовляем возможность увеличивать картинки
+  data.querySelector('.places__image').addEventListener('click', (evt) => {
+    const popupContainer = document.querySelector('.popup_type_image');
+    const closeButton = popupContainer.querySelector(".popup__close-button");
 
-    galleryElement.querySelector('.gallery__image').src = evt.target.src;
-    galleryElement.querySelector('.gallery__image').alt = evt.target.alt;
-    galleryElement.querySelector('.gallery__title').textContent = evt.target.alt;
+    popupContainer.querySelector('.popup__image').src = evt.target.src;
+    popupContainer.querySelector('.popup__image').alt = evt.target.alt;
+    popupContainer.querySelector('.popup__title').textContent = evt.target.alt;
 
-    // удаляем элемент из DOM
-    function deleteFromDom() {
-      galleryToDelete.remove();
-    }
-    // удаляем попап по нажатию на крестик
-    function deletePopup() {
-      deletePopupClass();
-      setTimeout(deleteFromDom, 500);
-    }
+    closeButton.addEventListener('click', () => closePopup(popupContainer));
 
-    closeButton.addEventListener('click', deletePopup);
-
-    gallery.append(galleryElement);
-
-    gallery.classList.add('gallery_opened');
-
+    openPopup(popupContainer);
   });
 
-  placesList.append(placesElement);
+  place.prepend(data);
+}
+
+// добавляем карты из массива в DOM
+initialCards.forEach(function(element) {
+  const placesElement = placesTemplate.cloneNode(true);
+
+  placesElement.querySelector('.places__title').textContent = element.name;
+  placesElement.querySelector('.places__image').src = element.link;
+  placesElement.querySelector('.places__image').alt = element.name;
+
+  renderCard(placesList, placesElement);
 });
 
-// создаем попап редактирования профиля
-editButton.addEventListener('click', function() {
-  const popupElement = popupTemplate.cloneNode(true);
-  const closeButton = popupElement.querySelector('.popup__close-button');
-  const popupForm = popupElement.querySelector(".popup__form");
-  const popupToDelete = closeButton.closest('.popup__container');
-  // находим инпуты формы
-  const firstInput = popupElement.querySelector('.popup__input_type_name');
-  const secondInput = popupElement.querySelector('.popup__input_type_prof');
+// попап редактирования профиля
+editButton.addEventListener('click', () => {
+  const popupContainer = document.querySelector('.popup_type_edit');
+  const popupForm = popupContainer.querySelector('.popup__form');
+  const nameInput = popupContainer.querySelector('.popup__input_type_name');
+  const profInput = popupContainer.querySelector('.popup__input_type_prof');
+  const closeButton = popupContainer.querySelector(".popup__close-button");
+  const profileName = document.querySelector(".profile__info-title");
+  const profileJob = document.querySelector(".profile__info-subtitle");
 
-  popupElement.querySelector('.popup__title').textContent = initialPopup[0].title;
-  popupElement.querySelector('.popup__input_type_name').value = initialPopup[0].firstInput;
-  popupElement.querySelector('.popup__input_type_prof').value = initialPopup[0].secondInput;
-  popupElement.querySelector('.popup__submit-button').textContent = initialPopup[0].button;
+  nameInput.value = profileName.textContent;
+  profInput.value = profileJob.textContent;
 
-  // удаляем элемент из DOM
-  function deleteFromDom() {
-    popupToDelete.remove();
-  }
-  // удаляем попап по нажатию на крестик
-  function deletePopup() {
-    deletePopupClass();
-    setTimeout(deleteFromDom, 500);
-  }
-
-  closeButton.addEventListener('click', deletePopup);
-
-  // соxраняем значения по кнопке сабмит
-  popupForm.addEventListener('submit', function(evt) {
+  popupForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    profileName.textContent = firstInput.value;
-    profileJob.textContent = secondInput.value;
-    deletePopup();
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = profInput.value;
+    closePopup(popupContainer);
   });
 
-  popup.append(popupElement);
+  closeButton.addEventListener('click', () => closePopup(popupContainer));
 
-  popup.classList.add('popup_opened');
-  popup.classList.add('popup-edit');
+  openPopup(popupContainer);
 });
 
-// создаем попап добавляения карточек
-addButton.addEventListener('click', function() {
-  const popupElement = popupTemplate.cloneNode(true);
-  const closeButton = popupElement.querySelector('.popup__close-button');
-  const popupForm = popupElement.querySelector(".popup__form");
-  const popupToDelete = closeButton.closest('.popup__container');
-  // находим инпуты формы
-  const firstInput = popupElement.querySelector('.popup__input_type_name');
-  const secondInput = popupElement.querySelector('.popup__input_type_prof');
+// попап добавления картинок
+addButton.addEventListener('click', () => {
+  const popupContainer = document.querySelector('.popup_type_add');
+  const popupForm = popupContainer.querySelector('.popup__form');
+  const locInput = popupContainer.querySelector('.popup__input_type_loc');
+  const linkInput = popupContainer.querySelector('.popup__input_type_link');
+  const closeButton = popupContainer.querySelector(".popup__close-button");
+  const cardElement = placesTemplate.cloneNode(true);
 
-  popupElement.querySelector('.popup__title').textContent = initialPopup[1].title;
-  popupElement.querySelector('.popup__input_type_name').placeholder = initialPopup[1].firstInput;
-  popupElement.querySelector('.popup__input_type_prof').placeholder = initialPopup[1].secondInput;
-  popupElement.querySelector('.popup__submit-button').textContent = initialPopup[1].button;
+  popupForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    cardElement.querySelector('.places__title').textContent = locInput.value;
+    cardElement.querySelector('.places__image').src = linkInput.value;
+    cardElement.querySelector('.places__image').alt = locInput.value;
 
-  // удаляем элемент из DOM
-  function deleteFromDom() {
-    popupToDelete.remove();
-  }
-  // удаляем попап по нажатию на крестик
-  function deletePopup() {
-    deletePopupClass();
-    setTimeout(deleteFromDom, 500);
-  }
-
-  closeButton.addEventListener('click', deletePopup);
-
-  // соxраняем значения по кнопке сабмит
-  popupForm.addEventListener('submit', function() {
-    const placesElement = placesTemplate.cloneNode(true);
-    const placesDeleteButton = placesElement.querySelector('.places__delete-button');
-
-    placesElement.querySelector('.places__title').textContent = firstInput.value;
-    placesElement.querySelector('.places__image').src = secondInput.value;
-    placesElement.querySelector('.places__image').alt = firstInput.value;
-
-    // добавляем возможность лайков
-    placesElement.querySelector('.places__like-button').addEventListener('click', function(evt) {
-      evt.target.classList.toggle('places__like-button_active');
-    });
-    //добовляем возможность удалять карточки
-    placesDeleteButton.addEventListener('click', function() {
-      const itemToDelete = placesDeleteButton.closest('.places__card');
-      itemToDelete.remove();
-    });
-
-    placesList.prepend(placesElement);
-    deletePopup();
+    renderCard(placesList, cardElement);
+    closePopup(popupContainer);
   });
 
-  popup.append(popupElement);
+  closeButton.addEventListener('click', () => closePopup(popupContainer));
 
-  popup.classList.add('popup_opened');
-  popup.classList.add('popup-add');
+  openPopup(popupContainer);
 });
 
-// удаляем классы попапа 
-function deletePopupClass() {
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+}
+
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
-  popup.classList.remove('popup-edit');
-  popup.classList.remove('popup-add');
-  gallery.classList.remove('gallery_opened');
 }
