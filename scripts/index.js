@@ -13,7 +13,6 @@ const addForm = addPopupContainer.querySelector('.popup__form');
 // находим кнопки
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const closeButton = document.querySelectorAll(".popup__close-button");
 
 // находим поля форм
 const nameInput = editPopupContainer.querySelector('.popup__input_type_name');
@@ -26,7 +25,9 @@ const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
 // закрываем попапы
-closeButton.forEach(function(buttonElement) {
+const closeButtons = document.querySelectorAll(".popup__close-button");
+
+closeButtons.forEach(function(buttonElement) {
   buttonElement.addEventListener('click', () => closePopup(buttonElement.closest('.popup')));
 });
 
@@ -42,19 +43,24 @@ editForm.addEventListener('submit', (evt) => {
 addForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const cardElement = { name: locInput.value, link: linkInput.value };
-  renderCard(cardElement);
+  renderCard(createCard(cardElement), placesList);
   closePopup(addPopupContainer);
   addForm.reset();
 });
 
-// рендерим карточки
-const renderCard = (data) => {
-  console.log(data.name);
+// рендерим карточки 
+const renderCard = (element, place) => {
+  place.prepend(element);
+}
+
+// создаем карточки
+const createCard = (data) => {
   const placesElement = placesTemplate.cloneNode(true);
+  const placesImageElement = placesElement.querySelector('.places__image');
 
   placesElement.querySelector('.places__title').textContent = data.name;
-  placesElement.querySelector('.places__image').src = data.link;
-  placesElement.querySelector('.places__image').alt = data.name;
+  placesImageElement.src = data.link;
+  placesImageElement.alt = data.name;
 
   // добавляем возможность лайков
   placesElement.querySelector('.places__like-button').addEventListener('click', (evt) => {
@@ -69,21 +75,21 @@ const renderCard = (data) => {
 
   //добовляем возможность увеличивать картинки
   placesElement.querySelector('.places__image').addEventListener('click', (evt) => {
-
-    imagePopupContainer.querySelector('.popup__image').src = evt.target.src;
-    imagePopupContainer.querySelector('.popup__image').alt = evt.target.alt;
+    const imagePopupContainerImage = imagePopupContainer.querySelector('.popup__image');
+    imagePopupContainerImage.src = evt.target.src;
+    imagePopupContainerImage.alt = evt.target.alt;
     imagePopupContainer.querySelector('.popup__title').textContent = evt.target.alt;
 
     openPopup(imagePopupContainer);
   });
 
-  placesList.prepend(placesElement);
+  return placesElement;
 }
 
 // добавляем карочки из массива в DOM
 initialCards.forEach(function(element) {
-  const cardElements = { name: element.name, link: element.link };
-  renderCard(cardElements);
+  const cardElement = { name: element.name, link: element.link };
+  renderCard(createCard(cardElement), placesList);
 });
 
 // попап редактирования профиля
