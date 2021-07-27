@@ -25,8 +25,6 @@ const linkInput = addPopupContainer.querySelector('.popup__input_type_link');
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
-
-
 // закрываем попапы
 closeButton.forEach(function(buttonElement) {
   buttonElement.addEventListener('click', () => closePopup(buttonElement.closest('.popup')));
