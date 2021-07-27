@@ -13,6 +13,7 @@ const addForm = addPopupContainer.querySelector('.popup__form');
 // находим кнопки
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
+const closeButtons = document.querySelectorAll(".popup__close-button");
 
 // находим поля форм
 const nameInput = editPopupContainer.querySelector('.popup__input_type_name');
@@ -25,8 +26,6 @@ const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
 // закрываем попапы
-const closeButtons = document.querySelectorAll(".popup__close-button");
-
 closeButtons.forEach(function(buttonElement) {
   buttonElement.addEventListener('click', () => closePopup(buttonElement.closest('.popup')));
 });
