@@ -77,7 +77,6 @@ addForm.addEventListener('submit', (evt) => {
   const cardElement = { name: locInput.value, link: linkInput.value };
   renderCard(createCard(cardElement), placesList);
   closePopup(addPopupContainer);
-  addForm.reset();
 });
 
 // рендерим карточки 
@@ -137,6 +136,7 @@ editButton.addEventListener('click', () => {
 
 // попап добавления картинок
 addButton.addEventListener('click', () => {;
+  addForm.reset();
   openPopup(addPopupContainer);
   closePopupOnEvent(addPopupContainer);
 });
