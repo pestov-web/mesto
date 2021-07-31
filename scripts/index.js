@@ -7,8 +7,8 @@ const editPopupContainer = document.querySelector('.popup_type_edit');
 const imagePopupContainer = document.querySelector('.popup_type_image');
 
 // находим формы 
-const editForm = document.forms.edit;
-const addForm = document.forms.add;
+const editForm = editPopupContainer.querySelector('.popup__form');
+const addForm = addPopupContainer.querySelector('.popup__form');
 
 // находим кнопки
 const editButton = document.querySelector('.profile__info-edit-button');
@@ -16,18 +16,51 @@ const addButton = document.querySelector('.profile__add-button');
 const closeButtons = document.querySelectorAll(".popup__close-button");
 
 // находим поля форм
-const nameInput = editForm.name;
-const profInput = editForm.prof;
-const locInput = addForm.loc;
-const linkInput = addForm.link;
+const nameInput = editPopupContainer.querySelector('.popup__input_type_name');
+const profInput = editPopupContainer.querySelector('.popup__input_type_prof');
+const locInput = addPopupContainer.querySelector('.popup__input_type_loc');
+const linkInput = addPopupContainer.querySelector('.popup__input_type_link');
 
 // находим текст профиля
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
-// закрываем попапы
+// открываем попап
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+};
+
+// закрываем попап и удаляем обработчики
+const closePopup = (popup) => {
+  popup.classList.remove('popup_opened');
+  popup.removeEventListener('mousedown', closeOnClick);
+  document.removeEventListener('keydown', closeOnEsc);
+};
+
+// закрываем попап и удаляем обработчики по клику на оверлэй
+const closeOnClick = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  };
+};
+
+// закрываем попап и удаляем обработчики по нажатию ESC
+const closeOnEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(closeOnEsc[0]);
+  };
+};
+
+// вешаем обработчики действий пользователя
+const closePopupOnEvent = (popup) => {
+  closeOnEsc[0] = popup;
+  popup.addEventListener('mousedown', closeOnClick);
+  document.addEventListener('keydown', closeOnEsc);
+};
+
+// обработчики закрыйтия попапов по кнопке закрыть
 closeButtons.forEach(function(buttonElement) {
-  buttonElement.addEventListener('click', () => togglePopup(buttonElement.closest('.popup')));
+  buttonElement.addEventListener('click', () => closePopup(buttonElement.closest('.popup')));
 });
 
 // сохраняем отредактированный профиль
@@ -35,7 +68,7 @@ editForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = profInput.value;
-  togglePopup(editPopupContainer);
+  closePopup(editPopupContainer);
 });
 
 // сохраняем новую карточку 
@@ -43,7 +76,7 @@ addForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const cardElement = { name: locInput.value, link: linkInput.value };
   renderCard(createCard(cardElement), placesList);
-  togglePopup(addPopupContainer);
+  closePopup(addPopupContainer);
   addForm.reset();
 });
 
@@ -79,7 +112,8 @@ const createCard = (data) => {
     imagePopupContainerImage.alt = evt.target.alt;
     imagePopupContainer.querySelector('.popup__title').textContent = evt.target.alt;
 
-    togglePopup(imagePopupContainer);
+    openPopup(imagePopupContainer);
+    closePopupOnEvent(imagePopupContainer);
   });
 
   return placesElement;
@@ -93,18 +127,16 @@ initialCards.forEach(function(element) {
 
 // попап редактирования профиля
 editButton.addEventListener('click', () => {
+
   nameInput.value = profileName.textContent;
   profInput.value = profileJob.textContent;
 
-  togglePopup(editPopupContainer);
+  openPopup(editPopupContainer);
+  closePopupOnEvent(editPopupContainer);
 });
 
 // попап добавления картинок
 addButton.addEventListener('click', () => {;
-  togglePopup(addPopupContainer);
+  openPopup(addPopupContainer);
+  closePopupOnEvent(addPopupContainer);
 });
-
-// добавляем или удаляем класс открытия попапа
-const togglePopup = (popup) => {
-  popup.classList.toggle('popup_opened');
-}

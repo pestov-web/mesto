@@ -7,7 +7,6 @@ const hasInvalidInput = (inputList) => {
 
 // делаем кнопку не активной ели поля не прошли проверку
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
-  console.log(inactiveButtonClass);
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
     buttonElement.disabled = true;
