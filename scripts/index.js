@@ -39,11 +39,11 @@ const imagePopupContainerTitle =
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
-// деактивируем кнопку сабмит для добавления картинок
-const disableImageSubmitButton = (imageSubmitButton) => {
-  imageSubmitButton.classList.add("popup__submit-button_disabled");
-  imageSubmitButton.disabled = true;
-};
+// // деактивируем кнопку сабмит для добавления картинок
+// const disableImageSubmitButton = (imageSubmitButton) => {
+//   imageSubmitButton.classList.add("popup__submit-button_disabled");
+//   imageSubmitButton.disabled = true;
+// };
 
 // открываем попап и вешаем обработчики действий пользователя
 const openPopup = (popup) => {
@@ -92,22 +92,16 @@ editForm.addEventListener("submit", (evt) => {
 // сохраняем новую карточку
 addForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-
-  const card = new Card(
-    { name: locInput.value, link: linkInput.value },
-    placesTemplate,
-    handleImageClick
+  placesList.prepend(
+    createCard({ name: locInput.value, link: linkInput.value })
   );
-  card.addCard(placesList);
-
   closePopup(addPopupContainer);
   addForm.reset();
-  disableImageSubmitButton(evt.target.querySelector(".popup__submit-button"));
+  // disableImageSubmitButton(evt.target.querySelector(".popup__submit-button"));
 });
 
 // открываем попап картинки
 const handleImageClick = (name, link) => {
-  console.log(name);
   imagePopupContainerImage.src = link;
   imagePopupContainerImage.alt = name;
   imagePopupContainerTitle.textContent = name;
@@ -128,14 +122,18 @@ addButton.addEventListener("click", () => {
   openPopup(addPopupContainer);
 });
 
+// получаем карточку
+const createCard = (data) => {
+  const card = new Card(data, placesTemplate, handleImageClick);
+  return card.generateCard();
+};
+
 // Добавляем карточки из массива
 initialCards.forEach((data) => {
-  const card = new Card(data, placesTemplate, handleImageClick);
-  card.addCard(placesList);
+  placesList.prepend(createCard(data));
 });
 
 // вызываем валидацию
-
 popupForms.forEach((formElement) => {
   const form = new FormValidator(validatorConfig, formElement);
   form.enableValidation();

@@ -37,6 +37,13 @@ export class FormValidator {
     errorElement.textContent = "";
   }
 
+  _disableSubmitButton() {
+    console.log(this._buttonElement.disabled);
+    console.log(this._buttonElement);
+    this._buttonElement.classList.add(this._data.inactiveButtonClass);
+    this._buttonElement.disabled = true;
+  }
+
   // меняем активость кнопки
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
@@ -67,6 +74,7 @@ export class FormValidator {
   _setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      this._disableSubmitButton();
     });
 
     this._inputList.forEach((inputElement) => {

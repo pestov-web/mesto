@@ -6,7 +6,7 @@ export class Card {
     this._handleImageClick = handleImageClick;
   }
 
-  _generateCard() {
+  generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
     this._cardImage = this._element.querySelector(".places__image");
@@ -23,12 +23,6 @@ export class Card {
   // Получаем теиплэйт
   _getTemplate() {
     return this._templateElement.querySelector(".places__card").cloneNode(true);
-  }
-
-  addCard(cardPlace) {
-    const cardElement = this._generateCard();
-    // Добавляем в DOM
-    cardPlace.append(cardElement);
   }
 
   // добавляем обработчики
