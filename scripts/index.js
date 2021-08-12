@@ -39,12 +39,6 @@ const imagePopupContainerTitle =
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
 
-// // деактивируем кнопку сабмит для добавления картинок
-// const disableImageSubmitButton = (imageSubmitButton) => {
-//   imageSubmitButton.classList.add("popup__submit-button_disabled");
-//   imageSubmitButton.disabled = true;
-// };
-
 // открываем попап и вешаем обработчики действий пользователя
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
@@ -97,7 +91,6 @@ addForm.addEventListener("submit", (evt) => {
   );
   closePopup(addPopupContainer);
   addForm.reset();
-  // disableImageSubmitButton(evt.target.querySelector(".popup__submit-button"));
 });
 
 // открываем попап картинки
