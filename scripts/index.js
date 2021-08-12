@@ -95,7 +95,8 @@ addForm.addEventListener("submit", (evt) => {
 
   const card = new Card(
     { name: locInput.value, link: linkInput.value },
-    placesTemplate
+    placesTemplate,
+    handleImageClick
   );
   card.addCard(placesList);
 
