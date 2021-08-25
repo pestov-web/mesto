@@ -1,7 +1,7 @@
 export class Card {
   constructor(data, templateElement, handleImageClick) {
     this._templateElement = templateElement;
-    this._name = data.name;
+    this._name = data.loc;
     this._link = data.link;
     this._handleImageClick = handleImageClick;
   }

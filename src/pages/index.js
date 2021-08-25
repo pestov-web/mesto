@@ -7,6 +7,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import Userinfo from "../components/UserInfo.js";
 
 import {
   placesList,
@@ -15,45 +16,34 @@ import {
   popupSelectors,
   formSelectors,
   buttonSelectors,
-  userInputs,
-  cardInputs,
   profileText,
 } from "../utils/constants.js";
 
-// сохраняем отредактированный профиль
-formSelectors.edit.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  profileText.name.textContent = formInputs.name.value;
-  profileText.prof.textContent = formInputs.prof.value;
-  closePopup(popupSelectors.edit);
-});
-
-// // сохраняем новую карточку
-// formSelectors.add.addEventListener("submit", (evt) => {
-//   evt.preventDefault();
-//   placesList.prepend(
-//     createCard({ name: formInputs.loc.value, link: formInputs.link.value })
-//   );
-//   closePopup(popupSelectors.add);
-//   formSelectors.add.reset();
-// });
-
 // попап редактирования профиля
 buttonSelectors.edit.addEventListener("click", () => {
-  formInputs.name.value = profileText.name.textContent;
-  formInputs.prof.value = profileText.prof.textContent;
-
-  openPopup(popupSelectors.edit);
+  popupEdit.open();
+  popupEdit.setInputs(userInfo.getUserInfo());
 });
 
-// попап добавления картинок
-buttonSelectors.add.addEventListener("click", () => {
-  popupAdd();
-});
+// экземпляр класса Userinfo
+const userInfo = new Userinfo(profileText);
 
-const popupAdd = new PopupWithForm(popupSelectors.add, cardInputs, {
+// добавляем новую информацию профиля
+const popupEdit = new PopupWithForm(popupSelectors.edit, {
   submit: (data) => {
-    const card = new Card(item, placesTemplate, handleImageClick);
+    userInfo.setUserInfo(data);
+  },
+});
+
+// попап добавления карточек
+buttonSelectors.add.addEventListener("click", () => {
+  popupAdd.open();
+});
+
+// добавляем новую карточку
+const popupAdd = new PopupWithForm(popupSelectors.add, {
+  submit: (data) => {
+    const card = new Card(data, placesTemplate, handleImageClick);
     const cardElement = card.generateCard();
     cardList.addItem(cardElement);
   },

@@ -15,7 +15,7 @@ export default class Popup {
   // закрываем попап и удаляем обработчики
   close() {
     this._popupSelector.classList.remove("popup_opened");
-    this._removeEventListeners();
+    this.removeEventListeners();
   }
 
   // закрываем попап по нажатию ESC
@@ -45,7 +45,7 @@ export default class Popup {
   }
 
   // удаляем обработчики
-  _removeEventListeners() {
+  removeEventListeners() {
     this._popupSelector.removeEventListener(
       "mousedown",
       this._handleClickClose

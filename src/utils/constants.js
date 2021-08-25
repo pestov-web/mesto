@@ -10,11 +10,7 @@ const popupForms = document.querySelectorAll(".popup__form");
 const editButton = document.querySelector(".profile__info-edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const closeButtons = document.querySelectorAll(".popup__close-button");
-// находим поля форм
-const nameInput = editPopupContainer.querySelector(".popup__input_type_name");
-const profInput = editPopupContainer.querySelector(".popup__input_type_prof");
-const locInput = addPopupContainer.querySelector(".popup__input_type_loc");
-const linkInput = addPopupContainer.querySelector(".popup__input_type_link");
+
 // находим текст профиля
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
@@ -49,16 +45,6 @@ export const buttonSelectors = {
   add: addButton,
   edit: editButton,
   closeBtns: closeButtons,
-};
-
-export const userInputs = {
-  name: nameInput,
-  prof: profInput,
-};
-
-export const cardInputs = {
-  loc: locInput,
-  link: linkInput,
 };
 
 export const profileText = {

@@ -8,27 +8,27 @@ import rudnaya from "../images/places/rudnaya.jpg";
 
 export const initialCards = [
   {
-    name: "Владивосток",
+    loc: "Владивосток",
     link: vlad,
   },
   {
-    name: "Воронеж",
+    loc: "Воронеж",
     link: voronej,
   },
   {
-    name: "Санья",
+    loc: "Санья",
     link: sanya,
   },
   {
-    name: "Южно-Сахалинск",
+    loc: "Южно-Сахалинск",
     link: saha,
   },
   {
-    name: "Дальнегорск",
+    loc: "Дальнегорск",
     link: dalas,
   },
   {
-    name: "Рудная пристань",
+    loc: "Рудная пристань",
     link: rudnaya,
   },
 ];
