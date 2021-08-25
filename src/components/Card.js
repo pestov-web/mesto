@@ -5,7 +5,7 @@ export class Card {
     this._link = data.link;
     this._handleImageClick = handleImageClick;
   }
-
+  // генерируем карточку
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
