@@ -1,12 +1,17 @@
 export class FormValidator {
   constructor(data, formElement) {
     this._formElement = formElement;
-    this._data = data;
+    this._inputSelector = data.inputSelector;
+    this._submitButtonSelector = data.submitButtonSelector;
+    this._inputErrorClass = data.inputErrorClass;
+    this._errorClass = data.errorClass;
+    this._inactiveButtonClass = data.inactiveButtonClass;
+
     this._inputList = Array.from(
-      this._formElement.querySelectorAll(this._data.inputSelector)
+      this._formElement.querySelectorAll(this._inputSelector)
     );
     this._buttonElement = this._formElement.querySelector(
-      this._data.submitButtonSelector
+      this._submitButtonSelector
     );
   }
 
@@ -21,9 +26,9 @@ export class FormValidator {
       `#${inputElement.id}-error`
     );
 
-    inputElement.classList.add(this._data.inputErrorClass);
+    inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(this._data.errorClass);
+    errorElement.classList.add(this._errorClass);
   }
 
   // убераем ошибку
@@ -32,23 +37,22 @@ export class FormValidator {
       `#${inputElement.id}-error`
     );
 
-    inputElement.classList.remove(this._data.inputErrorClass);
-    errorElement.classList.remove(this._data.errorClass);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";
   }
 
   _disableSubmitButton() {
-    this._buttonElement.classList.add(this._data.inactiveButtonClass);
+    this._buttonElement.classList.add(this._inactiveButtonClass);
     this._buttonElement.disabled = true;
   }
 
   // меняем активость кнопки
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
-      this._buttonElement.classList.add(this._data.inactiveButtonClass);
-      this._buttonElement.disabled = true;
+      this._disableSubmitButton();
     } else {
-      this._buttonElement.classList.remove(this._data.inactiveButtonClass);
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.disabled = false;
     }
   }

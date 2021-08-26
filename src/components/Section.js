@@ -1,12 +1,12 @@
 export default class Section {
-  constructor({ data, renderer }, containerSelector) {
+  constructor({ data, renderer }, placesList) {
     this._renderedItems = data;
     this._renderer = renderer;
-    this._container = containerSelector;
+    this._placesList = placesList;
   }
   // добавляем элемент в дом
   addItem(element) {
-    this._container.prepend(element);
+    this._placesList.prepend(element);
   }
   // проходим массив
   renderItems() {

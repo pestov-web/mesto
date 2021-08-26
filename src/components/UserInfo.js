@@ -1,9 +1,7 @@
-export default class Userinfo {
+export default class UserInfo {
   constructor(data) {
-    this._newName = data;
-    this._newJob = data;
-    this._namePlace = document.querySelector(".profile__info-title");
-    this._profPlace = document.querySelector(".profile__info-subtitle");
+    this._namePlace = data.name;
+    this._profPlace = data.prof;
   }
   // получаем текст профиля с дом
   getUserInfo() {

@@ -10,7 +10,7 @@ export default class PopupWithForm extends Popup {
   }
 
   // устанавливаем значения в полях ввода
-  setInputs(data) {
+  setInputValues(data) {
     const inputs = Array.from(this._inputList);
     inputs.forEach((element) => {
       element.value = data[element.name];
@@ -41,13 +41,6 @@ export default class PopupWithForm extends Popup {
   };
   // убираем обработчики
   removeEventListeners() {
-    super.removeEventListeners();
     this._popupSelector.removeEventListener("submit", this._handleSubmitButton);
   }
-
-  // закрытие попапа ( также отчищает форму при любом закрытии)
-  // close() {
-  //   super.close();
-  //   this._popupForm.reset();
-  // }
 }

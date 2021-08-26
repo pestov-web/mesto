@@ -1,21 +1,20 @@
 export default class Popup {
-  constructor(popupSelector) {
-    this._popupSelector = popupSelector;
-    this._closeButton = this._popupSelector.querySelector(
-      ".popup__close-button"
-    );
+  constructor(popup) {
+    this._popup = popup;
+    this._closeButton = this._popup.querySelector(".popup__close-button");
+    this.close = this.close.bind(this);
   }
 
   // открываем попап и вешаем обработчики
   open() {
-    this._popupSelector.classList.add("popup_opened");
-    this.setEventListeners();
+    this._popup.classList.add("popup_opened");
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   // закрываем попап и удаляем обработчики
   close() {
-    this._popupSelector.classList.remove("popup_opened");
-    this.removeEventListeners();
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscClose);
   }
 
   // закрываем попап по нажатию ESC
@@ -32,25 +31,9 @@ export default class Popup {
     }
   };
 
-  // закрываем попап по нажатию на крестик
-  _handleButtonClose = () => {
-    this.close();
-  };
-
   // вешаем обработчики
   setEventListeners() {
-    this._popupSelector.addEventListener("mousedown", this._handleClickClose);
-    document.addEventListener("keydown", this._handleEscClose);
-    this._closeButton.addEventListener("click", this._handleButtonClose);
-  }
-
-  // удаляем обработчики
-  removeEventListeners() {
-    this._popupSelector.removeEventListener(
-      "mousedown",
-      this._handleClickClose
-    );
-    document.removeEventListener("keydown", this._handleEscClose);
-    this._closeButton.removeEventListener("click", this._handleButtonClose);
+    this._popup.addEventListener("mousedown", this._handleClickClose);
+    this._closeButton.addEventListener("click", this.close);
   }
 }

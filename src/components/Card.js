@@ -5,6 +5,7 @@ export class Card {
     this._link = data.link;
     this._handleImageClick = handleImageClick;
   }
+
   // генерируем карточку
   generateCard() {
     this._element = this._getTemplate();
@@ -37,7 +38,7 @@ export class Card {
     this._element
       .querySelector(".places__like-button")
       .addEventListener("click", () => {
-        this._handleLikeButton();
+        this._handleCardLike();
       });
     // попап картинки
     this._element
@@ -47,7 +48,7 @@ export class Card {
       });
   }
   // добавляем возможность лайков
-  _handleLikeButton() {
+  _handleCardLike() {
     this._element
       .querySelector(".places__like-button")
       .classList.toggle("places__like-button_active");
@@ -55,5 +56,6 @@ export class Card {
   //добовляем возможность удалять карточки
   _handleDeleteButton() {
     this._element.remove();
+    this._element = null;
   }
 }

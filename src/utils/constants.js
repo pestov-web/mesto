@@ -18,17 +18,7 @@ const profileJob = document.querySelector(".profile__info-subtitle");
 export const placesList = document.querySelector(".places__cards");
 export const placesTemplate =
   document.querySelector(".places-template").content;
-// находим картинку
-export const imagePopupContainerImage =
-  imagePopupContainer.querySelector(".popup__image");
-// находим текст картинки
-export const imagePopupContainerTitle =
-  imagePopupContainer.querySelector(".popup__title");
 
-export const popupImg = {
-  img: imagePopupContainerImage,
-  title: imagePopupContainerTitle,
-};
 export const popupSelectors = {
   add: addPopupContainer,
   edit: editPopupContainer,

@@ -7,12 +7,11 @@ import { FormValidator } from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import Userinfo from "../components/UserInfo.js";
+import UserInfo from "../components/UserInfo.js";
 
 import {
   placesList,
   placesTemplate,
-  popupImg,
   popupSelectors,
   formSelectors,
   buttonSelectors,
@@ -20,13 +19,11 @@ import {
 } from "../utils/constants.js";
 
 // попап редактирования профиля
+const userInfo = new UserInfo(profileText);
 buttonSelectors.edit.addEventListener("click", () => {
   popupEdit.open();
-  popupEdit.setInputs(userInfo.getUserInfo());
+  popupEdit.setInputValues(userInfo.getUserInfo());
 });
-
-// экземпляр класса Userinfo
-const userInfo = new Userinfo(profileText);
 
 // добавляем новую информацию профиля
 const popupEdit = new PopupWithForm(popupSelectors.edit, {
@@ -34,44 +31,50 @@ const popupEdit = new PopupWithForm(popupSelectors.edit, {
     userInfo.setUserInfo(data);
   },
 });
+popupEdit.setEventListeners();
 
 // попап добавления карточек
 buttonSelectors.add.addEventListener("click", () => {
   popupAdd.open();
 });
 
+// открываем попап картинки
+const image = new PopupWithImage(popupSelectors.image);
+const handleImageClick = (name, link) => {
+  image.open(name, link);
+};
+image.setEventListeners();
+
+// вызываем валидацию
+const setFormValidation = (formElement) => {
+  const form = new FormValidator(validatorConfig, formElement);
+  form.enableValidation(formElement);
+};
+
+formSelectors.all.forEach((formElement) => {
+  setFormValidation(formElement);
+});
+
+// создаем карточку
+const createCard = (data) => {
+  const card = new Card(data, placesTemplate, handleImageClick);
+  return card.generateCard();
+};
+
 // добавляем новую карточку
 const popupAdd = new PopupWithForm(popupSelectors.add, {
   submit: (data) => {
-    const card = new Card(data, placesTemplate, handleImageClick);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
+    cardList.addItem(createCard(data));
   },
 });
-
-// открываем попап картинки
-const handleImageClick = (name, link) => {
-  const image = new PopupWithImage(popupSelectors.image, popupImg, {
-    name,
-    link,
-  });
-  image.open();
-};
-
-// вызываем валидацию
-formSelectors.all.forEach((formElement) => {
-  const form = new FormValidator(validatorConfig, formElement);
-  form.enableValidation();
-});
+popupAdd.setEventListeners();
 
 // добавляем начальные карточки из массива
 const cardList = new Section(
   {
     data: initialCards,
     renderer: (item) => {
-      const card = new Card(item, placesTemplate, handleImageClick);
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
+      cardList.addItem(createCard(item));
     },
   },
   placesList
