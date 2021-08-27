@@ -46,14 +46,18 @@ const handleImageClick = (name, link) => {
 image.setEventListeners();
 
 // вызываем валидацию
-const setFormValidation = (formElement) => {
-  const form = new FormValidator(validatorConfig, formElement);
-  form.enableValidation(formElement);
-};
+const addCardFormValidator = new FormValidator(
+  validatorConfig,
+  formSelectors.add
+);
 
-formSelectors.all.forEach((formElement) => {
-  setFormValidation(formElement);
-});
+const editProfileFormValidator = new FormValidator(
+  validatorConfig,
+  formSelectors.edit
+);
+
+addCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
 
 // создаем карточку
 const createCard = (data) => {
@@ -61,20 +65,24 @@ const createCard = (data) => {
   return card.generateCard();
 };
 
-// добавляем новую карточку
+// попап добавления новй карточки
 const popupAdd = new PopupWithForm(popupSelectors.add, {
   submit: (data) => {
-    cardList.addItem(createCard(data));
+    addCard(data);
   },
 });
 popupAdd.setEventListeners();
 
+// добавляекм карточку в дом
+const addCard = (data) => {
+  cardList.addItem(createCard(data));
+};
 // добавляем начальные карточки из массива
 const cardList = new Section(
   {
     data: initialCards,
     renderer: (item) => {
-      cardList.addItem(createCard(item));
+      addCard(item);
     },
   },
   placesList

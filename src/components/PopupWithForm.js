@@ -1,12 +1,11 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, { submit }) {
-    super(popupSelector);
-    this._popupSelector = popupSelector;
-    this._inputList = this._popupSelector.querySelectorAll(".popup__input");
+  constructor(popup, { submit }) {
+    super(popup);
+    this._inputList = this._popup.querySelectorAll(".popup__input");
     this._submit = submit;
-    this._popupForm = this._popupSelector.querySelector(".popup__form");
+    this._popupForm = this._popup.querySelector(".popup__form");
   }
 
   // устанавливаем значения в полях ввода
@@ -29,7 +28,7 @@ export default class PopupWithForm extends Popup {
   // вешаем обработчик на кнопку сабмит
   setEventListeners() {
     super.setEventListeners();
-    this._popupSelector.addEventListener("submit", this._handleSubmitButton);
+    this._popup.addEventListener("submit", this._handleSubmitButton);
   }
   // кнопка сабмит
   _handleSubmitButton = (evt) => {
@@ -39,8 +38,4 @@ export default class PopupWithForm extends Popup {
     this._popupForm.reset();
     super.close();
   };
-  // убираем обработчики
-  removeEventListeners() {
-    this._popupSelector.removeEventListener("submit", this._handleSubmitButton);
-  }
 }

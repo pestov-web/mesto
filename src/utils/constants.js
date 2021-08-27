@@ -5,7 +5,6 @@ const imagePopupContainer = document.querySelector(".popup_type_image");
 // находим формы
 const editForm = editPopupContainer.querySelector(".popup__form");
 const addForm = addPopupContainer.querySelector(".popup__form");
-const popupForms = document.querySelectorAll(".popup__form");
 // находим кнопки
 const editButton = document.querySelector(".profile__info-edit-button");
 const addButton = document.querySelector(".profile__add-button");
@@ -28,7 +27,6 @@ export const popupSelectors = {
 export const formSelectors = {
   add: addForm,
   edit: editForm,
-  all: popupForms,
 };
 
 export const buttonSelectors = {
