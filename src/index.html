@@ -17,7 +17,7 @@
         <img
           src="<%=require('./images/profile/custo.jpg')%>"
           alt="Аватар пользователя"
-          class="profile__avatar"
+          class="profile__avatar button profile__avatar-button"
         />
         <div class="profile__info">
           <h1 class="profile__info-title">Жак-Ив Кусто</h1>
@@ -59,6 +59,31 @@
         <h2 class="popup__title popup__title_type_image">Владивосток</h2>
       </div>
     </div>
+    <!-- avatar popup-->
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <button
+          class="button popup__close-button"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+        <form action="#" class="popup__form" name="avatar" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input
+            type="url"
+            placeholder="Ссылка"
+            class="popup__input popup__input_type_avatar"
+            id="input-avatar"
+            name="avatar"
+            required
+          />
+          <span class="popup__error" id="input-avatar-error"></span>
+          <button class="button popup__submit-button" type="submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
     <!-- edit popup-->
     <div class="popup popup_type_edit">
       <div class="popup__container">
@@ -85,7 +110,7 @@
             placeholder="Профессия"
             class="popup__input popup__input_type_prof"
             id="input-prof"
-            name="prof"
+            name="about"
             required
             minlength="2"
             maxlength="200"
@@ -133,7 +158,18 @@
         </form>
       </div>
     </div>
-
+    <!-- confirm popup-->
+    <div class="popup popup_type_confirm">
+      <div class="popup__container">
+        <button
+          class="button popup__close-button"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button class="button popup__submit-button" type="submit">Да</button>
+      </div>
+    </div>
     <!-- places template-->
     <template class="places-template">
       <li class="places__card">
@@ -149,11 +185,14 @@
         />
         <div class="places__description">
           <h2 class="places__title">Владивосток</h2>
-          <button
-            class="button places__like-button"
-            type="button"
-            aria-label="Нравится"
-          ></button>
+          <div class="places__like-container">
+            <button
+              class="button places__like-button"
+              type="button"
+              aria-label="Нравится"
+            ></button>
+            <span class="places__like-counter">0</span>
+          </div>
         </div>
       </li>
     </template>

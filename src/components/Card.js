@@ -1,8 +1,11 @@
 export class Card {
   constructor(data, templateElement, handleImageClick) {
     this._templateElement = templateElement;
-    this._name = data.loc;
+    this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
+    this._cardId = data._id;
+    this._ownerId = data.owner._id;
     this._handleImageClick = handleImageClick;
   }
 
@@ -16,6 +19,8 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._element.querySelector(".places__title").textContent = this._name;
+    this._element.querySelector(".places__like-counter").textContent =
+      this._likes.length;
 
     // Вернём элемент
     return this._element;
@@ -52,6 +57,8 @@ export class Card {
     this._element
       .querySelector(".places__like-button")
       .classList.toggle("places__like-button_active");
+    console.log("card id = " + this._cardId);
+    console.log("owner id = " + this._ownerId);
   }
   //добовляем возможность удалять карточки
   _handleDeleteButton() {

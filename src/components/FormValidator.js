@@ -15,6 +15,7 @@ export class FormValidator {
     );
   }
 
+  // FIXME: плохо реализована валидация разного кол-ва инпутов
   // включаем валидацию
   enableValidation() {
     this._setEventListeners();
@@ -78,13 +79,13 @@ export class FormValidator {
       evt.preventDefault();
       this._disableSubmitButton();
     });
-
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState();
       });
     });
+
     this._toggleButtonState();
   }
 }

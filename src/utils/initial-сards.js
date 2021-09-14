@@ -1,4 +1,3 @@
-// массив обьектов карточек мест
 import vlad from "../images/places/vlad.jpg";
 import voronej from "../images/places/voronej.jpg";
 import sanya from "../images/places/sanya.jpg";
@@ -8,27 +7,27 @@ import rudnaya from "../images/places/rudnaya.jpg";
 
 export const initialCards = [
   {
-    loc: "Владивосток",
+    name: "Владивосток",
     link: vlad,
   },
   {
-    loc: "Воронеж",
+    name: "Воронеж",
     link: voronej,
   },
   {
-    loc: "Санья",
+    name: "Санья",
     link: sanya,
   },
   {
-    loc: "Южно-Сахалинск",
+    name: "Южно-Сахалинск",
     link: saha,
   },
   {
-    loc: "Дальнегорск",
+    name: "Дальнегорск",
     link: dalas,
   },
   {
-    loc: "Рудная пристань",
+    name: "Рудная пристань",
     link: rudnaya,
   },
 ];
