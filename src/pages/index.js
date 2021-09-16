@@ -35,11 +35,17 @@ buttonSelectors.edit.addEventListener("click", () => {
   popupEdit.setInputValues(userInfo.getUserInfo());
 });
 
-// добавляем новую информацию профиля
+// меняем аватар пользователя
 const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
   submit: (data) => {
-    api.patchUserAvatar(data);
-    userInfo.setUserAvatar(data);
+    api
+      .patchUserAvatar(data)
+      .then((res) => {
+        userInfo.setUserAvatar(res);
+      })
+      .catch((err) => {
+        console.log(`не могу поменять аватар: ${err}.`);
+      });
   },
 });
 
@@ -48,8 +54,14 @@ popupAvatar.setEventListeners();
 // добавляем новую информацию профиля
 const popupEdit = new PopupWithForm(popupSelectors.edit, {
   submit: (data) => {
-    api.patchUserInfo(data);
-    userInfo.setUserInfo(data);
+    api
+      .patchUserInfo(data)
+      .then((res) => {
+        userInfo.setUserInfo(res);
+      })
+      .catch((err) => {
+        console.log(`не могу поменять данные пользователя: ${err}.`);
+      });
   },
 });
 popupEdit.setEventListeners();
@@ -92,18 +104,64 @@ addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
 
+// удаляем карточку
+const handleCardRemove = (id) => {
+  api.removeCard(id).catch((err) => {
+    console.log(`не могу удалить карточку: ${err}.`);
+  });
+};
+
 // создаем карточку
 const createCard = (data) => {
-  const card = new Card(data, placesTemplate, handleImageClick);
+  const card = new Card(
+    data,
+    placesTemplate,
+    handleImageClick,
+    handleCardRemove,
+    handleUserId,
+    setLike,
+    removeLike
+  );
   return card.generateCard();
+};
+
+const handleUserId = () => {
+  api
+    .getUserInfo()
+    .then((res) => {
+      return res._id;
+    })
+    .catch((err) => {
+      console.log(`не могу получит ид пользователя: ${err}.`);
+    });
+};
+
+const setLike = (id) => {
+  api.likeCard(id).catch((err) => {
+    console.log(`не могу поставить лайк: ${err}.`);
+  });
+};
+
+const removeLike = (id) => {
+  api.removeLike().catch((err) => {
+    console.log(`не могу удалить лайк: ${err}.`);
+  });
 };
 
 // попап добавления новй карточки
 const popupAdd = new PopupWithForm(popupSelectors.add, {
   submit: (data) => {
-    addCard(data);
+    api
+      .postNewCard(data)
+      .then((res) => {
+        addCard(res);
+      })
+      .catch((err) => {
+        console.log(`не могу добавить карточку: ${err}.`);
+      });
   },
 });
+
 popupAdd.setEventListeners();
 
 // добавляекм карточку в дом
@@ -111,10 +169,15 @@ const addCard = (data) => {
   cardList.addItem(createCard(data));
 };
 // устанавливаем данные пользователя
-api.getUserInfo().then((res) => {
-  userInfo.setUserInfo(res);
-  userInfo.setUserAvatar(res);
-});
+api
+  .getUserInfo()
+  .then((res) => {
+    userInfo.setUserInfo(res);
+    userInfo.setUserAvatar(res);
+  })
+  .catch((err) => {
+    console.log(`ошибка: ${err}.`);
+  });
 
 // добавляем начальные карточки
 api
