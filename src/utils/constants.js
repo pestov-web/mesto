@@ -12,7 +12,7 @@ const avatarForm = avatarPopupContainer.querySelector(".popup__form");
 const editButton = document.querySelector(".profile__info-edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const closeButtons = document.querySelectorAll(".popup__close-button");
-const avatarButton = document.querySelector(".profile__avatar-button");
+const avatarButton = document.querySelector(".profile__avatar-edit-button");
 // находим элемнты профиля
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");

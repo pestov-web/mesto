@@ -42,7 +42,7 @@ buttonSelectors.edit.addEventListener("click", () => {
 const popupConfirm = new PopupWithConfirmation(popupSelectors.confirm, {
   submit: () => {},
 });
-const handleDeleteCardClick = () => {
+const handleDeleteCardClick = (cardId) => {
   popupConfirm.open();
 };
 popupConfirm.setEventListeners();

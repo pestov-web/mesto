@@ -14,11 +14,15 @@
     <main>
       <!--  Section Profile-->
       <section class="profile">
-        <img
-          src="<%=require('./images/profile/custo.jpg')%>"
-          alt="Аватар пользователя"
-          class="profile__avatar button profile__avatar-button"
-        />
+        <div class="profile__avatar-container">
+          <img
+            src="<%=require('./images/profile/custo.jpg')%>"
+            alt="Аватар пользователя"
+            class="profile__avatar"
+          />
+          <button class="profile__avatar-edit-button button"></button>
+        </div>
+
         <div class="profile__info">
           <h1 class="profile__info-title">Жак-Ив Кусто</h1>
           <button
