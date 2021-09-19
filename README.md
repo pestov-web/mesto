@@ -15,6 +15,7 @@
 - Подход mobile-first
 - ООП
 - WebPack
+- API
 
 ## Планы по доработке
 
