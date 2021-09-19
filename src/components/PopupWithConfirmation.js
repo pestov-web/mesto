@@ -1,8 +1,9 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithConfirmation extends Popup {
-  constructor(popup) {
+  constructor(popup, { submit }) {
     super(popup);
+    this._submit = submit;
   }
 
   setEventListeners() {
@@ -12,10 +13,6 @@ export default class PopupWithConfirmation extends Popup {
 
   _handleSubmitButton = (evt) => {
     evt.preventDefault();
-
-    super.close();
+    this._submit();
   };
-  hadleShit() {
-    console.log("pizda");
-  }
 }

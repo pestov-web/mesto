@@ -59,7 +59,6 @@ export default class Api {
 
   // добавляем новую карточку
   postNewCard(data) {
-    console.log(data.name);
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -78,6 +77,7 @@ export default class Api {
     }).then((res) => this._handleResponse(res));
   }
 
+  _removeCardFromDom(element) {}
   // лайкаем карточку
   likeCard(id) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {

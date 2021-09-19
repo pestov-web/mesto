@@ -13,6 +13,15 @@ const editButton = document.querySelector(".profile__info-edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const closeButtons = document.querySelectorAll(".popup__close-button");
 const avatarButton = document.querySelector(".profile__avatar-edit-button");
+// находим кнопки подтверждения
+const confirmDelete = confirmPopupContainer.querySelector(
+  ".popup__submit-button"
+);
+const confirmEdit = editPopupContainer.querySelector(".popup__submit-button");
+const confirmAdd = addPopupContainer.querySelector(".popup__submit-button");
+const confirmAvatar = avatarPopupContainer.querySelector(
+  ".popup__submit-button"
+);
 // находим элемнты профиля
 const profileName = document.querySelector(".profile__info-title");
 const profileJob = document.querySelector(".profile__info-subtitle");
@@ -41,6 +50,13 @@ export const buttonSelectors = {
   edit: editButton,
   closeBtns: closeButtons,
   avatar: avatarButton,
+};
+
+export const submitButtons = {
+  delete: confirmDelete,
+  edit: confirmEdit,
+  add: confirmAdd,
+  ava: confirmAvatar,
 };
 
 export const profileElements = {

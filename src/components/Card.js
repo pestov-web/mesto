@@ -3,7 +3,6 @@ export class Card {
     data,
     templateElement,
     handleImageClick,
-    handleCardRemove,
     { setLike, removeLike },
     userId,
     handleDeleteCardClick
@@ -16,8 +15,6 @@ export class Card {
     this._cardId = this._card._id;
     this._ownerId = this._card.owner._id;
     this._handleImageClick = handleImageClick;
-    this._handleCardRemove = handleCardRemove;
-    // this._handleCardLike = this._handleCardLike.bind(this);
     this._userId = userId;
     this._setLike = setLike;
     this._removeLike = removeLike;
@@ -60,7 +57,7 @@ export class Card {
   _setEventListeners() {
     // Конопка удалить
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteCardClick(this._cardId);
+      this._handleDeleteCardClick(this._cardId, this._element);
     });
     // Кнопка лайков
     this._likeButton.addEventListener("click", () => {
@@ -89,13 +86,6 @@ export class Card {
 
   _toggleCardLike() {
     this._likeButton.classList.toggle("places__like-button_active");
-  }
-
-  //добовляем возможность удалять карточки
-  _deleteCard() {
-    this._handleCardRemove(this._cardId);
-    this._element.remove();
-    this._element = null;
   }
 
   _hideDeleteButton() {

@@ -18,9 +18,11 @@ import {
   formSelectors,
   buttonSelectors,
   profileElements,
+  submitButtons,
 } from "../utils/constants.js";
 
 let userId = null;
+let cardData = {};
 
 // авторизация в апи
 const api = new Api({
@@ -39,10 +41,28 @@ buttonSelectors.edit.addEventListener("click", () => {
   popupEdit.setInputValues(userInfo.getUserInfo());
 });
 
+// попап подтвеждения удаления
 const popupConfirm = new PopupWithConfirmation(popupSelectors.confirm, {
-  submit: () => {},
+  submit: () => {
+    submitButtons.delete.textContent = "Удаление...";
+    api
+      .removeCard(cardData.id)
+      .catch((err) => {
+        console.log(`не могу удалить карточку: ${err}.`);
+      })
+      .finally(() => {
+        cardData.element.remove();
+        cardData.element = null;
+        popupConfirm.close();
+        submitButtons.delete.textContent = "Да";
+      });
+  },
 });
-const handleDeleteCardClick = (cardId) => {
+const handleDeleteCardClick = (cardId, element) => {
+  cardData = {
+    id: cardId,
+    element: element,
+  };
   popupConfirm.open();
 };
 popupConfirm.setEventListeners();
@@ -50,6 +70,7 @@ popupConfirm.setEventListeners();
 // меняем аватар пользователя
 const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
   submit: (data) => {
+    submitButtons.ava.textContent = "Сохранение...";
     api
       .patchUserAvatar(data)
       .then((res) => {
@@ -57,6 +78,10 @@ const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
       })
       .catch((err) => {
         console.log(`не могу поменять аватар: ${err}.`);
+      })
+      .finally(() => {
+        popupAvatar.close();
+        submitButtons.ava.textContent = "Сохранить";
       });
   },
 });
@@ -65,6 +90,7 @@ popupAvatar.setEventListeners();
 // добавляем новую информацию профиля
 const popupEdit = new PopupWithForm(popupSelectors.edit, {
   submit: (data) => {
+    submitButtons.edit.textContent = "Сохранение...";
     api
       .patchUserInfo(data)
       .then((res) => {
@@ -72,6 +98,10 @@ const popupEdit = new PopupWithForm(popupSelectors.edit, {
       })
       .catch((err) => {
         console.log(`не могу поменять данные пользователя: ${err}.`);
+      })
+      .finally(() => {
+        popupEdit.close();
+        submitButtons.edit.textContent = "Сохранить";
       });
   },
 });
@@ -113,20 +143,12 @@ addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
 
-// удаляем карточку
-const handleCardRemove = (id) => {
-  api.removeCard(id).catch((err) => {
-    console.log(`не могу удалить карточку: ${err}.`);
-  });
-};
-
 // создаем карточку
 const createCard = (data) => {
   const card = new Card(
     data,
     placesTemplate,
     handleImageClick,
-    handleCardRemove,
     {
       setLike: (id) => {
         api
@@ -158,6 +180,7 @@ const createCard = (data) => {
 // попап добавления новй карточки
 const popupAdd = new PopupWithForm(popupSelectors.add, {
   submit: (data) => {
+    submitButtons.add.textContent = "Сохранение...";
     api
       .postNewCard(data)
       .then((res) => {
@@ -165,6 +188,10 @@ const popupAdd = new PopupWithForm(popupSelectors.add, {
       })
       .catch((err) => {
         console.log(`не могу добавить карточку: ${err}.`);
+      })
+      .finally(() => {
+        popupAdd.close();
+        submitButtons.add.textContent = "Создать";
       });
   },
 });
