@@ -3,6 +3,7 @@ export default class UserInfo {
     this._namePlace = data.name;
     this._profPlace = data.about;
     this._avaPlace = data.avatar;
+    this._userId = data;
     this._handleAvatarClick = handleAvatarClick;
   }
   // получаем текст профиля с дом
@@ -10,6 +11,7 @@ export default class UserInfo {
     const info = {
       name: this._namePlace.textContent,
       about: this._profPlace.textContent,
+      id: this._userId,
     };
     return info;
   }
@@ -18,6 +20,7 @@ export default class UserInfo {
     this._namePlace.textContent = info.name;
     this._profPlace.textContent = info.about;
   }
+  // устанавливаем новый аватар
   setUserAvatar(info) {
     this._avaPlace.src = info.avatar;
   }

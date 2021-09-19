@@ -3,6 +3,7 @@ const addPopupContainer = document.querySelector(".popup_type_add");
 const editPopupContainer = document.querySelector(".popup_type_edit");
 const imagePopupContainer = document.querySelector(".popup_type_image");
 const avatarPopupContainer = document.querySelector(".popup_type_avatar");
+const confirmPopupContainer = document.querySelector(".popup_type_confirm");
 // находим формы
 const editForm = editPopupContainer.querySelector(".popup__form");
 const addForm = addPopupContainer.querySelector(".popup__form");
@@ -26,6 +27,7 @@ export const popupSelectors = {
   edit: editPopupContainer,
   image: imagePopupContainer,
   avatar: avatarPopupContainer,
+  confirm: confirmPopupContainer,
 };
 
 export const formSelectors = {

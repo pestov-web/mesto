@@ -27,6 +27,13 @@ export default class Api {
     }).then((res) => this._handleResponse(res));
   }
 
+  getUserId() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    }).then((res) => this._handleResponse(res));
+  }
+
   // обновляем информацию о пользователе
   patchUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {

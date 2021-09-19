@@ -8,6 +8,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 
 import {
@@ -18,6 +19,8 @@ import {
   buttonSelectors,
   profileElements,
 } from "../utils/constants.js";
+
+let userId = null;
 
 // авторизация в апи
 const api = new Api({
@@ -30,10 +33,19 @@ const api = new Api({
 
 // попап редактирования профиля
 const userInfo = new UserInfo(profileElements);
+
 buttonSelectors.edit.addEventListener("click", () => {
   popupEdit.open();
   popupEdit.setInputValues(userInfo.getUserInfo());
 });
+
+const popupConfirm = new PopupWithConfirmation(popupSelectors.confirm, {
+  submit: () => {},
+});
+const handleDeleteCardClick = () => {
+  popupConfirm.open();
+};
+popupConfirm.setEventListeners();
 
 // меняем аватар пользователя
 const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
@@ -48,7 +60,6 @@ const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
       });
   },
 });
-
 popupAvatar.setEventListeners();
 
 // добавляем новую информацию профиля
@@ -93,8 +104,6 @@ const editProfileFormValidator = new FormValidator(
   formSelectors.edit
 );
 
-// FIXME: переделать валидация для формы с одним инпутом
-
 const editAvatarFormValidator = new FormValidator(
   validatorConfig,
   formSelectors.avatar
@@ -118,34 +127,32 @@ const createCard = (data) => {
     placesTemplate,
     handleImageClick,
     handleCardRemove,
-    handleUserId,
-    setLike,
-    removeLike
+    {
+      setLike: (id) => {
+        api
+          .likeCard(id)
+          .then((res) => {
+            card.setLikeCount(res.likes.length);
+          })
+          .catch((err) => {
+            console.log(`не могу поставить лайк: ${err}.`);
+          });
+      },
+      removeLike: (id) => {
+        api
+          .removeLike(id)
+          .then((res) => {
+            card.setLikeCount(res.likes.length);
+          })
+          .catch((err) => {
+            console.log(`не могу удалить лайк: ${err}.`);
+          });
+      },
+    },
+    userId,
+    handleDeleteCardClick
   );
   return card.generateCard();
-};
-
-const handleUserId = () => {
-  api
-    .getUserInfo()
-    .then((res) => {
-      return res._id;
-    })
-    .catch((err) => {
-      console.log(`не могу получит ид пользователя: ${err}.`);
-    });
-};
-
-const setLike = (id) => {
-  api.likeCard(id).catch((err) => {
-    console.log(`не могу поставить лайк: ${err}.`);
-  });
-};
-
-const removeLike = (id) => {
-  api.removeLike().catch((err) => {
-    console.log(`не могу удалить лайк: ${err}.`);
-  });
 };
 
 // попап добавления новй карточки
@@ -174,6 +181,7 @@ api
   .then((res) => {
     userInfo.setUserInfo(res);
     userInfo.setUserAvatar(res);
+    userId = res._id;
   })
   .catch((err) => {
     console.log(`ошибка: ${err}.`);
