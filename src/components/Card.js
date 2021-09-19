@@ -60,7 +60,7 @@ export class Card {
   _setEventListeners() {
     // Конопка удалить
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteCardClick();
+      this._handleDeleteCardClick(this._cardId);
     });
     // Кнопка лайков
     this._likeButton.addEventListener("click", () => {
