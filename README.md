@@ -25,4 +25,4 @@
 
 ### Ссылка на сайт
 
-https://pestov-web.github.io
+https://pestov-web.github.io/mesto/
