@@ -15,7 +15,6 @@ export class FormValidator {
     );
   }
 
-  // FIXME: плохо реализована валидация разного кол-ва инпутов
   // включаем валидацию
   enableValidation() {
     this._setEventListeners();
