@@ -108,11 +108,13 @@ const popupEditProfile = new PopupWithForm(popupSelectors.edit, {
 popupEditProfile.setEventListeners();
 
 buttonSelectors.avatar.addEventListener("click", () => {
+  editAvatarFormValidator.updateErrorsState();
   popupAvatar.open();
 });
 
 // попап добавления карточек
 buttonSelectors.add.addEventListener("click", () => {
+  addCardFormValidator.updateErrorsState();
   popupAddCard.open();
 });
 
@@ -212,7 +214,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserAvatar(userData);
     userId = userData._id;
 
-    cardList.renderItems(cards);
+    cardList.renderItems(cards.reverse());
   })
   .catch((err) => {
     console.log(`ошибка: ${err}`);

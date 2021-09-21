@@ -87,4 +87,12 @@ export class FormValidator {
 
     this._toggleButtonState();
   }
+  // убираем ошибки при повторном открытии
+  updateErrorsState() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+
+    this._toggleButtonState();
+  }
 }
