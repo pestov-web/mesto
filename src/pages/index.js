@@ -37,6 +37,7 @@ const api = new Api({
 const userInfo = new UserInfo(profileElements);
 
 buttonSelectors.edit.addEventListener("click", () => {
+  editProfileFormValidator.updateErrorsState();
   popupEditProfile.open();
   popupEditProfile.setInputValues(userInfo.getUserInfo());
 });
