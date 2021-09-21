@@ -17,7 +17,7 @@ export default class PopupWithForm extends Popup {
   }
   // получаем значения полей ввода
   _getInputValues() {
-    let data = {};
+    const data = {};
     this._inputList.forEach((element) => {
       {
         data[element.name] = element.value;

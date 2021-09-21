@@ -22,7 +22,7 @@ import {
 } from "../utils/constants.js";
 
 let userId = null;
-let cardData = {};
+const cardData = {};
 
 // авторизация в апи
 const api = new Api({
@@ -37,8 +37,8 @@ const api = new Api({
 const userInfo = new UserInfo(profileElements);
 
 buttonSelectors.edit.addEventListener("click", () => {
-  popupEdit.open();
-  popupEdit.setInputValues(userInfo.getUserInfo());
+  popupEditProfile.open();
+  popupEditProfile.setInputValues(userInfo.getUserInfo());
 });
 
 // попап подтвеждения удаления
@@ -47,22 +47,22 @@ const popupConfirm = new PopupWithConfirmation(popupSelectors.confirm, {
     submitButtons.delete.textContent = "Удаление...";
     api
       .removeCard(cardData.id)
+      .then(() => {
+        cardData.element.remove();
+        cardData.element = null;
+        popupConfirm.close();
+      })
       .catch((err) => {
         console.log(`не могу удалить карточку: ${err}.`);
       })
       .finally(() => {
-        cardData.element.remove();
-        cardData.element = null;
-        popupConfirm.close();
         submitButtons.delete.textContent = "Да";
       });
   },
 });
 const handleDeleteCardClick = (cardId, element) => {
-  cardData = {
-    id: cardId,
-    element: element,
-  };
+  cardData.id = cardId;
+  cardData.element = element;
   popupConfirm.open();
 };
 popupConfirm.setEventListeners();
@@ -75,12 +75,12 @@ const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
       .patchUserAvatar(data)
       .then((res) => {
         userInfo.setUserAvatar(res);
+        popupAvatar.close();
       })
       .catch((err) => {
         console.log(`не могу поменять аватар: ${err}.`);
       })
       .finally(() => {
-        popupAvatar.close();
         submitButtons.ava.textContent = "Сохранить";
       });
   },
@@ -88,24 +88,24 @@ const popupAvatar = new PopupWithForm(popupSelectors.avatar, {
 popupAvatar.setEventListeners();
 
 // добавляем новую информацию профиля
-const popupEdit = new PopupWithForm(popupSelectors.edit, {
+const popupEditProfile = new PopupWithForm(popupSelectors.edit, {
   submit: (data) => {
     submitButtons.edit.textContent = "Сохранение...";
     api
       .patchUserInfo(data)
       .then((res) => {
         userInfo.setUserInfo(res);
+        popupEditProfile.close();
       })
       .catch((err) => {
         console.log(`не могу поменять данные пользователя: ${err}.`);
       })
       .finally(() => {
-        popupEdit.close();
         submitButtons.edit.textContent = "Сохранить";
       });
   },
 });
-popupEdit.setEventListeners();
+popupEditProfile.setEventListeners();
 
 buttonSelectors.avatar.addEventListener("click", () => {
   popupAvatar.open();
@@ -113,15 +113,15 @@ buttonSelectors.avatar.addEventListener("click", () => {
 
 // попап добавления карточек
 buttonSelectors.add.addEventListener("click", () => {
-  popupAdd.open();
+  popupAddCard.open();
 });
 
 // открываем попап картинки
-const image = new PopupWithImage(popupSelectors.image);
+const popupImage = new PopupWithImage(popupSelectors.image);
 const handleImageClick = (name, link) => {
-  image.open(name, link);
+  popupImage.open(name, link);
 };
-image.setEventListeners();
+popupImage.setEventListeners();
 
 // вызываем валидацию
 const addCardFormValidator = new FormValidator(
@@ -178,50 +178,44 @@ const createCard = (data) => {
 };
 
 // попап добавления новй карточки
-const popupAdd = new PopupWithForm(popupSelectors.add, {
+const popupAddCard = new PopupWithForm(popupSelectors.add, {
   submit: (data) => {
     submitButtons.add.textContent = "Сохранение...";
     api
       .postNewCard(data)
       .then((res) => {
         addCard(res);
+        popupAddCard.close();
       })
       .catch((err) => {
         console.log(`не могу добавить карточку: ${err}.`);
       })
       .finally(() => {
-        popupAdd.close();
         submitButtons.add.textContent = "Создать";
       });
   },
 });
 
-popupAdd.setEventListeners();
+popupAddCard.setEventListeners();
 
 // добавляекм карточку в дом
 const addCard = (data) => {
   cardList.addItem(createCard(data));
 };
-// устанавливаем данные пользователя
-api
-  .getUserInfo()
-  .then((res) => {
-    userInfo.setUserInfo(res);
-    userInfo.setUserAvatar(res);
-    userId = res._id;
-  })
-  .catch((err) => {
-    console.log(`ошибка: ${err}.`);
-  });
 
+// устанавливаем данные пользователя
 // добавляем начальные карточки
-api
-  .getInitialCards()
-  .then((res) => {
-    cardList.renderItems(res);
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
+    userId = userData._id;
+
+    cardList.renderItems(cards);
   })
   .catch((err) => {
-    console.log(`не могу получить карточки. ${err}.`);
+    console.log(`ошибка: ${err}`);
     cardList.renderItems(initialCards);
   });
 

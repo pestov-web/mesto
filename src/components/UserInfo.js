@@ -17,11 +17,19 @@ export default class UserInfo {
   }
   // устанавливаем новые значения текста профиля
   setUserInfo(info) {
-    this._namePlace.textContent = info.name;
-    this._profPlace.textContent = info.about;
+    if (info) {
+      this._namePlace.textContent = info.name;
+      this._profPlace.textContent = info.about;
+    } else {
+      console.log(`не удалось установить новые данные, ошибка: ${info}`);
+    }
   }
   // устанавливаем новый аватар
   setUserAvatar(info) {
-    this._avaPlace.src = info.avatar;
+    if (info.avatar) {
+      this._avaPlace.src = info.avatar;
+    } else {
+      console.log(`не удалось установить аватар, ошибка: ${info.avatar}`);
+    }
   }
 }
