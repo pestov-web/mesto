@@ -2,10 +2,10 @@
 # Учебный проект: Место
 ![Linzer screenshot](screenshot.webp)
 
-### Описание
+## Описание
 Это интерактивная страница, где люди делятся фотографиями их любимых мест. А также оценивают фотографии других пользователей.
 #### Демонстрация приложения: [https://pestov-web.github.io/mesto](https://pestov-web.github.io/mesto)
-### Стек приложения
+## Стек приложения
 ![HTML5](https://img.shields.io/badge/-HTML5-141130?style=flat-square&logo=HTML5)
 ![CSS3](https://img.shields.io/badge/-CSS3-141130?style=flat-square&logo=CSS3&logoColor=009900)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-141130?style=flat-square&logo=JavaScript)
