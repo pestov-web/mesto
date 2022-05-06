@@ -15,7 +15,7 @@
 .profile__avatar-edit-button{background:no-repeat url(a086f758840ae814ecde.svg);background-color:rgba(0,0,0,.8);background-position:50%;border:none;border-radius:100px;cursor:pointer;height:120px;left:0;opacity:0;position:absolute;top:0;width:120px}.profile__avatar-edit-button:hover{opacity:1}
 .places{margin:0 auto;padding-top:36px}
 .places__cards{display:grid;justify-content:center;list-style:none;margin:0 auto;padding:0;row-gap:20px}@media screen and (min-width:768px){.places__cards{-moz-column-gap:17px;column-gap:17px;grid-template-columns:282px 282px}}@media screen and (min-width:1024px){.places__cards{-moz-column-gap:17px;column-gap:17px;grid-template-columns:282px 282px 282px}}
-.places__card{background:#fff;border-radius:10px;font-size:0;min-height:361px;overflow:hidden;position:relative;width:282px}
+.places__card{background:#fff;border-radius:10px;display:flex;flex-direction:column;font-size:0;min-height:361px;overflow:hidden;position:relative;width:282px}
 .places__delete-button{background-color:transparent;background-image:url(cbc09a894bdd4c956365.svg);background-position:50%;background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:19.3px;margin:0;position:absolute;right:15px;top:18px;width:18px}.places__delete-button:hover{opacity:.6}
 .places__delete-button_hiden{visibility:hidden}
 .places__description{align-items:center;display:flex;flex-direction:row;justify-content:space-between;padding:22px 20px 22px 21px}
